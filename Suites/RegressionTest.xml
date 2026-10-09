@@ -17,11 +17,11 @@
             <class name="Tests.CheckoutTest"/>
 
             <!-- 4. Test care pică INTENȚIONAT (assert greșit: "5" în loc de "1"). -->
-            <class name="Tests.ProductTest">
+            <!--<class name="Tests.ProductTest">
                 <methods>
                     <include name="verifyCartBadgeIntentionalFail"/>
                 </methods>
-            </class>
+            </class> -->
         </classes>
     </test>
 
