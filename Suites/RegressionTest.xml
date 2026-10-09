@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!-- Suita de regresie: rulează toate testele proiectului.
+     parallel="classes" + thread-count="4" = până la 2 clase de test rulează simultan. -->
+<suite name="RegressionTest" parallel="classes" thread-count="2">
+
+    <test name="Regression Tests">
+        <classes>
+            <!-- 1. Login cu utilizatorul standard -->
+            <class name="Tests.StandardUserTest"/>
+
+            <!-- 2. Coș: adăugare produs + eliminare produs -->
+            <class name="Tests.CartTest"/>
+
+            <!-- 3. Comandă completă, data-driven (clienții din checkoutData.xml) -->
+            <class name="Tests.CheckoutTest"/>
+
+            <!-- 4. Test care pică INTENȚIONAT (assert greșit: "5" în loc de "1"). -->
+            <class name="Tests.ProductTest">
+                <methods>
+                    <include name="verifyCartBadgeIntentionalFail"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

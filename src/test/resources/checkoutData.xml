@@ -1,0 +1,22 @@
+<!-- Date de test pentru checkout: fiecare <dataSet_N> = un client = o rulare a testului. -->
+<dataSets>
+    <dataSet_1>
+        <firstName>Sebastian</firstName>
+        <lastName>Marinescu</lastName>
+        <address>Prahova, 12</address>
+        <cardNumber>4242 4242 4242 4242</cardNumber>
+        <expiry>12/30</expiry>
+        <cvv>123</cvv>
+        <nameOnCard>Sebastian Marinescu</nameOnCard>
+    </dataSet_1>
+
+    <dataSet_2>
+        <firstName>Vlad</firstName>
+        <lastName>Popescu</lastName>
+        <address>Bucuresti, 15</address>
+        <cardNumber>4242 4242 4242 4242</cardNumber>
+        <expiry>01/29</expiry>
+        <cvv>456</cvv>
+        <nameOnCard>Vlad Popescu</nameOnCard>
+    </dataSet_2>
+</dataSets>
