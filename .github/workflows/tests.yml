@@ -1,0 +1,53 @@
+# Numele workflow-ului, afișat în tab-ul "Actions" de pe GitHub.
+name: Regression Tests
+
+# CÂND rulează testele.
+on:
+  push:
+    branches: [ main ]   # la fiecare push pe ramura main
+  pull_request:
+    branches: [ main ]   # la fiecare pull request către main
+  workflow_dispatch:     # + un buton "Run workflow" ca să-l pornești manual din GitHub
+
+jobs:
+  tests:
+    # GitHub pornește un calculator virtual Linux (Ubuntu). Chrome e deja instalat pe el.
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descarcă codul proiectului din repository.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Instalează Java (aceeași versiune ca în pom.xml) + păstrează în cache dependențele Maven,
+      #    ca rulările următoare să fie mai rapide.
+      - name: Set up Java 26
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '26'
+          cache: maven
+
+      # 3. Rulează suita (RegressionTest.xml, din pom.xml) cu Chrome FĂRĂ fereastră.
+      - name: Run tests (headless)
+        run: mvn -B test -Dheadless=true
+
+      # 4. Salvează raportul ChainTest, ca să-l descarci după rulare.
+      #    "if: always()" = îl salvăm și când testele pică (atunci ne interesează cel mai mult).
+      - name: Upload ChainTest report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chaintest-report
+          path: target/chaintest/
+
+      # 5. Salvează logurile Log4j2 și screenshot-urile testelor picate.
+      - name: Upload logs and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-and-screenshots
+          path: |
+            target/logs/
+            target/screenshots/
+          if-no-files-found: ignore

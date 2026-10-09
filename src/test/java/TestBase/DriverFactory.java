@@ -43,10 +43,28 @@ public class DriverFactory {
 
         ChromeOptions options = new ChromeOptions(); // Cream un obiect ChromeOptions.
 
+        // Headless = Chrome rulează FĂRĂ fereastră (necesar pe serverele GitHub, care nu au ecran).
+        // Implicit e "false" (vezi browserul pe calculatorul tău).
+        // Se activează din linia de comandă: mvn test -Dheadless=true
+        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
+
+        if (headless) {
+            options.addArguments(
+                    "--headless=new",            // pornește Chrome fără fereastră
+                    "--window-size=1920,1080",   // dimensiune fixă de ecran (maximize nu merge fără fereastră)
+                    "--no-sandbox",              // necesar pe serverele Linux din CI
+                    "--disable-dev-shm-usage"    // evită blocări din lipsă de memorie pe servere
+            );
+        }
+
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
+
+        if (!headless) {
+            driver.manage().window().maximize(); // maximize doar când avem fereastră
+        }
+
         driver.get("https://qademo.com/");
-        logger.info("Browser Chrome deschis pe https://qademo.com/");
+        logger.info("Browser Chrome deschis pe https://qademo.com/ (headless: {})", headless);
     }
 
     @AfterMethod
