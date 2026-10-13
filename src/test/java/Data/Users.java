@@ -8,7 +8,7 @@ public enum Users {
     // Valorile enum-ului. Fiecare apelează constructorul de mai jos cu username și parolă.
     // Se despart prin virgulă, iar lista se încheie cu punct și virgulă.
     STANDARD("standard_user", "standard123"),
-    ADMIN("admin_user", "$Admin08102026"),
+    ADMIN("admin_user", "$Admin13102026"),
     LOCKED("locked_user", "locked123"),
     INVALID("invalid_user", "wrong123");
 
